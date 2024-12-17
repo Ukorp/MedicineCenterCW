@@ -28,8 +28,10 @@ public class Logs {
 
     public String action;
 
+    @Column(name = "table_name")
     public String tableName;
 
+    @Column(name = "change_time")
     public LocalDateTime changeTime;
 
     public String details;

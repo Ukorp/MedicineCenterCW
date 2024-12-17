@@ -24,18 +24,15 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     List<Booking> findByDoctorId(Doctors doctorId);
 
-    @Query("select count(b) from Booking b")
-    Integer countAll();
-
     List<Booking> findByUserId(User userId);
 
-    @Query("select b from Booking b where (?1 = b.userId and b.date < current timestamp) order by b.date desc")
-    List<Booking> findBookingsByUserIdArchive(@RequestParam("userId") User userId);
-
     @Query("select b from Booking b where (?1 = b.userId and b.date >= current timestamp) order by b.date asc")
-    List<Booking> findBookingsByUserIdRelevant(@RequestParam("userId") User userId);
+    List<Booking> findBookingsByUserIdRelevant(User userId);
 
+    //    @Query("select b from Booking b where (?1 = b.userId and b.date < current timestamp) order by b.date desc")
+//    List<Booking> findBookingsByUserIdArchive(User userId);
 
-    List<Booking> findBookingsByUserIdAndDateBefore(User userId, LocalDateTime date);
+    @Query(value = "select * from booking b where (:userId = b.user_id and b.date < now()) order by b.date desc", nativeQuery = true)
+    List<Booking> findBookingsByUserIdArchive(Integer userId);
 
 }

@@ -49,10 +49,6 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
-    public Integer countAll() {
-        return bookingRepository.countAll();
-    }
-
     public Page<Booking> findAll(Pageable pageable) {
         return bookingRepository.findAll(pageable);
     }
@@ -79,7 +75,7 @@ public class BookingService {
 
     public List<Booking> findBookingsByUserIdArchive() {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return bookingRepository.findBookingsByUserIdArchive(currentUser);
+        return bookingRepository.findBookingsByUserIdArchive(currentUser.getId());
     }
 
     public List<Booking> findBookingsByUserIdRelevant() {

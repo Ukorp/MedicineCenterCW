@@ -25,9 +25,9 @@ const HelloPage = () => {
     return (<>
             <NavHeader user = {user}/>
             
-            <h1>Начало курсачу положено, {user === null ? <Spinner animation="border" role="status"/> : user.firstName}!</h1>
+            <h1>Начало курсачу положено, {user? user.firstName: <Spinner animation="border" role="status"/>}!</h1>
             <Container className="d-flex justify-content-center">
-            <Slider/>
+            {/* <Slider/> */}
             </Container>
         </>
     )

@@ -27,23 +27,27 @@ public class User implements UserDetails {
 	private Integer id;
 
 	@NotNull
+	@Column(name = "first_name")
 	private String firstName;
 
 	@NotNull
+	@Column(name = "last_name")
 	private String lastName;
 
 	@NotNull
-	@Column(unique = true)
+	@Column(name = "email", unique = true)
 	private String email;
 
 	@NotNull
+	@Column(name = "password")
 	private String password;
 
 	@NotNull
-	@Column(unique = true)
+	@Column(name = "phone_number", unique = true)
 	private String phoneNumber;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "role")
 	private Role role;
 
 	@JsonIgnore

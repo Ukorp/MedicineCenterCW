@@ -57,11 +57,6 @@ public class AdminController {
         return ResponseEntity.ok(logsService.findAll(PageRequest.of(offset, limit, Sort.by("changeTime").descending())));
     }
 
-    @GetMapping("/booking/count")
-    public ResponseEntity<Integer> getAllBookingsCount() {
-        return ResponseEntity.ok(bookingService.countAll());
-    }
-
     @GetMapping("user/all")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok((List<User>) userService.findAll());

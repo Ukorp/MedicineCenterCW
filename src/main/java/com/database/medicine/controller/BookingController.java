@@ -6,6 +6,7 @@ import com.database.medicine.dto.booking.BookingResponse;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.User;
 import com.database.medicine.service.BookingService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,7 @@ public class BookingController {
     }
 
     @GetMapping("/archive")
-    public ResponseEntity<List<BookingResponse>> bookingArchive(Principal principal) {
-        principal.getName();
+    public ResponseEntity<List<BookingResponse>> bookingArchive() {
         return ResponseEntity.ok(bookingService.findBookingsByUserIdArchive().stream().map(BookingResponse::new).toList());
     }
 

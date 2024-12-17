@@ -12,7 +12,7 @@ const DoctorsElem = (props) => {
     return (
         <Col md = {3} className="mb-4">
         <Card className = "h-100">
-            <Card.Body >
+            <Card.Body className="d-flex flex-column justify-content-between">
                 <Card.Title>{props.doctor.name}</Card.Title>
                 <Button variant="primary" onClick={() => handleClick()}>Записаться</Button>
             </Card.Body>
