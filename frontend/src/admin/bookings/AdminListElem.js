@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Container, Card, Button } from "react-bootstrap";
-import apiClient from "../../apiClient";
+import React from "react";
+import { Col, Card, Button } from "react-bootstrap";
+import apiClient from "../../axios_api/apiClient";
 
 const date = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
 const day = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
@@ -25,6 +25,8 @@ const AdminListElem = (props) => {
                 <Card.Title>{props.booking.userName}</Card.Title>
                 <Card.Text>{props.booking.serviceName}</Card.Text>
                 <Card.Text>{props.booking.doctorName}</Card.Text>
+                <Card.Text>{props.booking.branchName}</Card.Text>
+                <Card.Text>{props.booking.branchAddress}</Card.Text>
                 <Card.Text>{day[localDate.getDay()] + ', ' + localDate.getDate() + ' ' + date[localDate.getMonth()] + ', ' + localDate.getFullYear() + ' ' + localDate.getHours() + ':' + (localDate.getMinutes() < 10 ? '0' : '') + localDate.getMinutes()}</Card.Text>
                 <Card.Text>{props.booking.price} руб</Card.Text>
                 <Button variant="danger" onClick={deleteBooking}>Удалить запись</Button>

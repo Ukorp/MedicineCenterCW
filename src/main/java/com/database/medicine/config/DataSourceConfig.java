@@ -16,8 +16,7 @@ import java.util.Map;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "com.database.medicine.repository",
-        entityManagerFactoryRef = "entityManagerFactory"
+        basePackages = "com.database.medicine.repository"
 )
 public class DataSourceConfig {
 

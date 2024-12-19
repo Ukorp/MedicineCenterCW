@@ -1,28 +1,21 @@
 package com.database.medicine.service;
 
-import com.database.medicine.Exceptions.DoctorIsBusyException;
+import com.database.medicine.Exceptions.*;
 import com.database.medicine.dto.booking.BookingRequest;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.Doctors;
-import com.database.medicine.entity.ServicesDoctors;
 import com.database.medicine.entity.User;
 import com.database.medicine.repository.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -83,22 +76,29 @@ public class BookingService {
         return bookingRepository.findBookingsByUserIdRelevant(currentUser);
     }
 
-    public Booking createBooking(BookingRequest bookingRequest) throws DoctorIsBusyException {
+    public Booking createBooking(BookingRequest bookingRequest) {
         List<Booking> DoctorBookings = bookingRepository
-                .findByDoctorId(doctorService.findById(bookingRequest.getDoctorId()).orElseThrow());
+                .findByDoctorId(doctorService.findById(bookingRequest.getDoctorId())
+                        .orElseThrow(UnknownDoctorException::new));
         Doctors doctor = DoctorBookings.getFirst().getDoctorId();
-        com.database.medicine.entity.Service service = srvcService.findById(bookingRequest.getServiceId()).orElseThrow();
+        com.database.medicine.entity.Service service = srvcService
+                .findById(bookingRequest.getServiceId())
+                .orElseThrow(UnknownServiceException::new);
         serviceDoctorsRepository.getServicesDoctorsByDoctorIdAndServiceId(doctor, service)
-                .orElseThrow((() -> new DoctorIsBusyException("Доктор не имеет выбранной специальности")));
+                .orElseThrow(WrongDoctorException::new);
         if (DoctorBookings.stream()
                 .anyMatch(booking -> booking.getDate().equals(bookingRequest.getDate()))) {
-            throw new DoctorIsBusyException("Доктор занят в выбранное Вами время");
+            throw new DoctorIsBusyException();
+        }
+
+        if (bookingRequest.getDate().isBefore(LocalDateTime.now())) {
+            throw new WrongTimeException();
         }
 
         Booking currentBooking = Booking.builder()
-                .serviceId(srvcService.findById(bookingRequest.getServiceId()).orElseThrow())
+                .serviceId(srvcService.findById(bookingRequest.getServiceId()).orElseThrow(UnknownServiceException::new))
                 .userId(userService.findById(bookingRequest.getUserId()).orElse(null))
-                .doctorId(doctorService.findById(bookingRequest.getDoctorId()).orElseThrow())
+                .doctorId(doctorService.findById(bookingRequest.getDoctorId()).orElseThrow(UnknownDoctorException::new))
                 .date(bookingRequest.getDate())
                 .build();
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Container, NavLink, NavDropdown } from "react-bootstrap";
 import "./NavHeader.css";
-import LogoutButton from "../LogoutButton";
+import LogoutButton from "../auth/LogoutButton";
 
 class NavHeader extends React.Component {
     constructor(props) {

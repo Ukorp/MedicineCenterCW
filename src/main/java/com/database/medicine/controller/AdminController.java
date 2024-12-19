@@ -6,7 +6,6 @@ import com.database.medicine.dto.booking.BookingResponse;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.User;
 import com.database.medicine.service.BookingService;
-import com.database.medicine.service.DoctorService;
 import com.database.medicine.service.LogsService;
 import com.database.medicine.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +64,16 @@ public class AdminController {
     @DeleteMapping("user/delete")
     public void deleteUser(@RequestParam Integer userId) {
         userService.deleteById(userId);
+    }
+
+    @PatchMapping("user/make_admin")
+    public ResponseEntity<Boolean> changeToAdmin(@RequestParam Integer userId) {
+        return ResponseEntity.ok(userService.makeAdmin(userId));
+    }
+
+    @PatchMapping("user/make_user")
+    public ResponseEntity<Boolean> changeToUser(@RequestParam Integer userId) {
+        return ResponseEntity.ok(userService.makeUser(userId));
     }
 
     @PutMapping("user/update")

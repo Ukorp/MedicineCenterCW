@@ -6,14 +6,12 @@ import com.database.medicine.dto.booking.BookingResponse;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.User;
 import com.database.medicine.service.BookingService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,11 +26,7 @@ public class BookingController {
     public ResponseEntity<Booking> book(@RequestBody BookingRequest bookingRequest) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         bookingRequest.setUserId(currentUser.getId());
-        try {
-            return ResponseEntity.ok(bookingService.createBooking(bookingRequest));
-        } catch (DoctorIsBusyException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        return ResponseEntity.ok(bookingService.createBooking(bookingRequest));
     }
 
     @GetMapping("/archive")

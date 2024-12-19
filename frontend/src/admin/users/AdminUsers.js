@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from "react";
 import { Container, Row } from "react-bootstrap";
-import apiClient from "../../apiClient";
+import apiClient from "../../axios_api/apiClient";
 import AdminUserListElem from "./AdminUserListElem"
 
 const AdminUsers = () => {

@@ -18,6 +18,8 @@ public class BookingResponse {
     private String doctorName;
     private String serviceName;
     private Integer price;
+    private String branchName;
+    private String branchAddress;
     private LocalDateTime date;
 
     public BookingResponse(Booking booking) {
@@ -27,5 +29,7 @@ public class BookingResponse {
         this.serviceName = booking.getServiceId().getName();
         this.date = booking.getDate();
         this.price = booking.getServiceId().getPrice();
+        this.branchName = booking.getDoctorId().getBranchId().getName();
+        this.branchAddress = booking.getDoctorId().getBranchId().getAddress();
     }
 }

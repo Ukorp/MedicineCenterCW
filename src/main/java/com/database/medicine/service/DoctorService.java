@@ -1,5 +1,6 @@
 package com.database.medicine.service;
 
+import com.database.medicine.Exceptions.UnknownDoctorException;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.Doctors;
 import com.database.medicine.entity.ServicesDoctors;
@@ -22,7 +23,7 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
 
     public List<Doctors> findByServiceId(int serviceId) {
-        return serviceDoctorsRepository.getServicesDoctorsByServiceId(srvcService.findById(serviceId).orElseThrow())
+        return serviceDoctorsRepository.getServicesDoctorsByServiceId(srvcService.findById(serviceId).orElseThrow(UnknownDoctorException::new))
                 .stream()
                 .map(ServicesDoctors::getDoctorId)
                 .toList();

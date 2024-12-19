@@ -1,7 +1,6 @@
 import React, { useState, useEffect }  from "react";
 import { Container, Pagination, Row } from "react-bootstrap";
-import apiClient from "../../apiClient";
-import NavHeader from "../../header/NavHeader";
+import apiClient from "../../axios_api/apiClient";
 import AdminListElem from "./AdminListElem";
 
 const AdminRelevant = () => {

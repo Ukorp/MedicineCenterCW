@@ -34,4 +34,8 @@ public class Doctors {
     @OneToMany(mappedBy = "doctorId")
     private Set<Booking> bookings;
 
+    @ManyToOne
+    @JoinColumn(name = "branch_id", nullable = false)
+    private Branches branchId;
+
 }
