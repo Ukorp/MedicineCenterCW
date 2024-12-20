@@ -22,14 +22,12 @@ const HelloPage = () => {
         fetchGet()
     }, []);
 
-    return (<>
+    return (
+        <>
             <NavHeader user = {user}/>
             <Container className="d-flex justify-content-center my-5">
             <h1>Добро пожаловать, {user? user.firstName: <Spinner animation="border" role="status"/>}!</h1>
             </Container>
-            {/* <Container className="d-flex justify-content-center">
-            <Slider/>
-            </Container> */}
         </>
     )
 }

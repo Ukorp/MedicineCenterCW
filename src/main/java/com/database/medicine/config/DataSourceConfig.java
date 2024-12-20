@@ -55,5 +55,4 @@ public class DataSourceConfig {
                 .packages("com.database.medicine.entity")
                 .build();
     }
-
 }

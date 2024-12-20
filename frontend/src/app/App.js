@@ -10,6 +10,8 @@ import Archive from "../booking/archive/Archive";
 import Book from "../booking/book/Book";
 import Relevant from "../booking/relevant/Relevant";
 import AdminPanel from "../admin/AdminPanel";
+import NavHeader from "../header/NavHeader";
+import Footer from "../footer/Footer";
 
 class App extends React.Component {
 
@@ -19,6 +21,8 @@ class App extends React.Component {
 
   render () {
     return (
+      <>
+      <main className="mb-5">
       <BrowserRouter>
         <Routes>
           <Route path = "/login" element = {<Login/>}/>
@@ -31,6 +35,9 @@ class App extends React.Component {
           <Route path = "/admin/panel" element = {<AdminPanel/>}/>
         </Routes>
       </BrowserRouter>
+      </main>
+      <Footer/>
+      </>
     )
   }
 }
