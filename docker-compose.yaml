@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: "no"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: postgres
+  backend:
+    image: medicine-center:latest
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        DOCKER_BUILDKIT: 1
+    restart: "no"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+  client-frontend:
+    image: frontend:0.0.1
+    env_file:
+      - ./frontend/.env
+    build: ./frontend
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+volumes:
+  postgres_data:
+  pgadmin_data:
