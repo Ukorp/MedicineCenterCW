@@ -1,21 +1,21 @@
 spring:
-    datasource:
-      admin:
-        jdbc-url: jdbc:postgresql://localhost:5432/postgres
-        driver-class-name: org.postgresql.Driver
-        username: admin
-        password: 1234
-      user:
-        jdbc-url: jdbc:postgresql://localhost:5432/postgres
-        driver-class-name: org.postgresql.Driver
-        username: user
-        password: 4444
-    jpa:
-      show-sql: true
+  datasource:
+      url: ${DB_URL}
+      driver-class-name: org.postgresql.Driver
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
       hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          format_sql: true
-      database: postgresql
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+
+frontend:
+  url: ${FRONTEND_URL}

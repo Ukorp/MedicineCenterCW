@@ -1,6 +1,6 @@
 package com.database.medicine.config;
 
-import com.database.medicine.data_source.DataSourceContextHolder;
+//import com.database.medicine.data_source.DataSourceContextHolder;
 import com.database.medicine.service.JwtService;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
@@ -39,17 +39,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
-        String role = jwtService.extractRole(jwt);
-        logger.info("User role: " + role);
-        logger.info("jwt: " + jwt);
-        if (role.equalsIgnoreCase("ADMIN")) {
-            DataSourceContextHolder.setContextHolder("ADMIN");
-            logger.info("Admin connected");
-        }
-        else {
-            DataSourceContextHolder.setContextHolder("USER");
-            logger.info("User connected");
-        }
+//        String role = jwtService.extractRole(jwt);
+//        logger.info("User role: " + role);
+//        logger.info("jwt: " + jwt);
+//        if (role.equalsIgnoreCase("ADMIN")) {
+//            DataSourceContextHolder.setContextHolder("ADMIN");
+//            logger.info("Admin connected");
+//        }
+//        else {
+//            DataSourceContextHolder.setContextHolder("USER");
+//            logger.info("User connected");
+//        }
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             if (jwtService.validateToken(jwt, userDetails)) {

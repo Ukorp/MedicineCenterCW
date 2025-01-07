@@ -24,6 +24,8 @@ const PickDateTime = (props) => {
             });
     
             setPicks(formatedDates);
+            console.log(formatedDates);
+            console.log(picks);
         }, []);
 
         const makeRow = (array, size) => {
@@ -46,9 +48,7 @@ const PickDateTime = (props) => {
     }, []);    
 
     useEffect(() => {
-        if (dates.length > 0) {
             setDatesArray(makeRow(picks, 4));
-        }
     }, [dates]);
 
     const setDateForAll = (date) => {
@@ -77,10 +77,12 @@ const PickDateTime = (props) => {
         <Container className="xl my-3"><h1>Выберите дату: </h1></Container>
         <Container><Pagination size="bg" >{items}</Pagination></Container>
         <Container className="mt-4">
-            {datesArray.map(
+            {
+            datesArray.map(
                 (elem, index) => {
+                
                 return <Row key = {index}> 
-                        {elem.map((col, index) => <DateTimeElem func = {props.func} key = {index} busy = {[...dates, ...userDates]} date = {col}/>)}
+                        {elem.map((col, index) => <DateTimeElem func = {props.func} key = {index} busy = {[...dates, ...userDates, new Date()]} date = {col}/>)}
                     </Row>
                 }
                 )

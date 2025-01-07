@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
 
 const DateTimeElem = (props) => {
-
     const [disabled, setDisabled] = useState(false); 
 
     const handleClick = () => {
@@ -12,6 +11,7 @@ const DateTimeElem = (props) => {
 
     useEffect(() => {
         let currentDate = new Date();
+        console.log(props);
         if (currentDate.getHours() > 19) {
             currentDate.setHours(currentDate.getHours() + 5);
             console.log(currentDate);
@@ -30,7 +30,7 @@ const DateTimeElem = (props) => {
         else {
             setDisabled(false)
         }
-    });
+    }, []);
 
 
 

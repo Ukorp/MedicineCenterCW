@@ -77,10 +77,9 @@ public class BookingService {
     }
 
     public Booking createBooking(BookingRequest bookingRequest) {
+        Doctors doctor = doctorService.findById(bookingRequest.getDoctorId()).orElseThrow(UnknownDoctorException::new);
         List<Booking> DoctorBookings = bookingRepository
-                .findByDoctorId(doctorService.findById(bookingRequest.getDoctorId())
-                        .orElseThrow(UnknownDoctorException::new));
-        Doctors doctor = DoctorBookings.getFirst().getDoctorId();
+                .findByDoctorId(doctor);
         com.database.medicine.entity.Service service = srvcService
                 .findById(bookingRequest.getServiceId())
                 .orElseThrow(UnknownServiceException::new);
