@@ -49,7 +49,7 @@ const PickDateTime = (props) => {
 
     useEffect(() => {
             setDatesArray(makeRow(picks, 4));
-    }, [dates]);
+    }, [dates, picks]);
 
     const setDateForAll = (date) => {
         setPicks(picks.map(elem => {

@@ -16,7 +16,6 @@ const DateTimeElem = (props) => {
             currentDate.setHours(currentDate.getHours() + 5);
             console.log(currentDate);
         }
-
         if (props.busy.filter((elem) =>{ 
             elem.setMilliseconds(0);
             props.date.setMilliseconds(0);
@@ -30,7 +29,7 @@ const DateTimeElem = (props) => {
         else {
             setDisabled(false)
         }
-    }, []);
+    }, [props]);
 
 
 
