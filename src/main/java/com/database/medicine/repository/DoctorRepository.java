@@ -1,6 +1,5 @@
 package com.database.medicine.repository;
 
-import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.Doctors;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

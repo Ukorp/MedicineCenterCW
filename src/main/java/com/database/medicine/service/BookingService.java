@@ -2,12 +2,16 @@ package com.database.medicine.service;
 
 import com.database.medicine.Exceptions.*;
 import com.database.medicine.dto.booking.BookingRequest;
+import com.database.medicine.dto.mail.MailResponse;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.Doctors;
 import com.database.medicine.entity.User;
-import com.database.medicine.repository.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import com.database.medicine.repository.BookingRepository;
+import com.database.medicine.repository.ServiceDoctorsRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +33,8 @@ public class BookingService {
     private final SrvcService srvcService;
     private final ServiceDoctorsRepository serviceDoctorsRepository;
     private final JwtService jwtService;
+    private final KafkaSender kafkaSender;
+    private final ObjectMapper objectMapper;
 
     public void save(Booking booking) {
         bookingRepository.save(booking);
@@ -76,7 +82,7 @@ public class BookingService {
         return bookingRepository.findBookingsByUserIdRelevant(currentUser);
     }
 
-    public Booking createBooking(BookingRequest bookingRequest) {
+    public Booking createBooking(BookingRequest bookingRequest) throws JsonProcessingException {
         Doctors doctor = doctorService.findById(bookingRequest.getDoctorId()).orElseThrow(UnknownDoctorException::new);
         List<Booking> DoctorBookings = bookingRepository
                 .findByDoctorId(doctor);
@@ -101,12 +107,11 @@ public class BookingService {
                 .date(bookingRequest.getDate())
                 .build();
 
-        return bookingRepository.save(currentBooking);
-    }
+        var userEmail = userService.findById(bookingRequest.getUserId()).orElseThrow();
 
-    public Booking createBookingUser(BookingRequest bookingRequest) throws DoctorIsBusyException {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        bookingRequest.setUserId(currentUser.getId());
-        return createBooking(bookingRequest);
+//        var req = objectMapper.writeValueAsString(new MailResponse(currentBooking, userEmail.getEmail()));
+        kafkaSender.send("mail", new MailResponse(currentBooking, userEmail.getEmail()));
+        System.out.println(new MailResponse(currentBooking, userEmail.getEmail()).toString());
+        return bookingRepository.save(currentBooking);
     }
 }

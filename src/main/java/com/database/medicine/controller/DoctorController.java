@@ -7,7 +7,6 @@ import com.database.medicine.repository.BookingRepository;
 import com.database.medicine.repository.DoctorRepository;
 import com.database.medicine.service.DoctorService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.batch.BatchTransactionManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

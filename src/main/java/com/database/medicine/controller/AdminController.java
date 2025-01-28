@@ -8,6 +8,7 @@ import com.database.medicine.entity.User;
 import com.database.medicine.service.BookingService;
 import com.database.medicine.service.LogsService;
 import com.database.medicine.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,7 +37,7 @@ public class AdminController {
         }
         try {
             return ResponseEntity.ok(bookingService.createBooking(bookingRequest));
-        } catch (DoctorIsBusyException e) {
+        } catch (DoctorIsBusyException | JsonProcessingException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
     }

@@ -1,11 +1,11 @@
 package com.database.medicine.controller;
 
-import com.database.medicine.Exceptions.DoctorIsBusyException;
 import com.database.medicine.dto.booking.BookingRequest;
 import com.database.medicine.dto.booking.BookingResponse;
 import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.User;
 import com.database.medicine.service.BookingService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("/book")
-    public ResponseEntity<Booking> book(@RequestBody BookingRequest bookingRequest) {
+    public ResponseEntity<Booking> book(@RequestBody BookingRequest bookingRequest) throws JsonProcessingException {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         bookingRequest.setUserId(currentUser.getId());
         return ResponseEntity.ok(bookingService.createBooking(bookingRequest));

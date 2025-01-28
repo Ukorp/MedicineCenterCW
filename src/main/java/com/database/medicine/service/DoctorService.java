@@ -1,7 +1,6 @@
 package com.database.medicine.service;
 
 import com.database.medicine.Exceptions.UnknownDoctorException;
-import com.database.medicine.entity.Booking;
 import com.database.medicine.entity.Doctors;
 import com.database.medicine.entity.ServicesDoctors;
 import com.database.medicine.repository.DoctorRepository;

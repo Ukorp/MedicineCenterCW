@@ -1,4 +1,4 @@
-package com.database.medicine.dto.booking;
+package com.database.medicine.dto.mail;
 
 import com.database.medicine.entity.Booking;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BookingResponse {
+public class MailResponse {
     private Integer id;
     private String userName;
     private String doctorName;
@@ -21,9 +21,10 @@ public class BookingResponse {
     private String branchName;
     private String branchAddress;
     private LocalDateTime date;
+    private String email;
 
 
-    public BookingResponse(Booking booking) {
+    public MailResponse(Booking booking, String email) {
         this.id = booking.getId();
         this.userName = booking.getUserId().getFirstName() + " " + booking.getUserId().getLastName();
         this.doctorName = booking.getDoctorId().getName();
@@ -32,5 +33,6 @@ public class BookingResponse {
         this.price = booking.getServiceId().getPrice();
         this.branchName = booking.getDoctorId().getBranchId().getName();
         this.branchAddress = booking.getDoctorId().getBranchId().getAddress();
+        this.email = email;
     }
 }
